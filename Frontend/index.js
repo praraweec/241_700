@@ -26,8 +26,8 @@ window.onload = async () => {
             ageDOM.value = user.age;
             descriptionDOM.value = user.description;
 
-            let genderDOMs = document.querySelector('input[name=gender]');
-            let interestDOMs = document.querySelectorAll('input[name=interests]:checked');
+            let genderDOMs = document.querySelectorAll('input[name=gender]');
+            let interestDOMs = document.querySelectorAll('input[name=interests]');
 
             for(let i = 0; i < genderDOMs.length; i++) {
                 if(genderDOMs[i].value == user.gender) {
@@ -106,6 +106,17 @@ const submitData = async () => {
             message:'กรุณากรอกข้อมูลให้ครบถ้วน',
             errors: errors
         }
+    }
+
+    let message = 'บันทึกข้อมูลสำเร็จ';
+
+    if (mode == 'CREATE'){
+        const response = await axios.post(`${BASE_URL}/users`, userData);
+        console.log('response', response).data;
+    }else{
+        const response = await axios.put(`${BASE_URL}/users/${selectedId}`, userData);
+        message = 'แก้ไขข้อมูลสำเร็จ';
+        console.log('response', response.data);
     }
     
     console.log('submitData', userData);
